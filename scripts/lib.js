@@ -118,7 +118,7 @@ const APPLY_FORM_SELECTOR = '[data-hook="apply-modal"], form[action*="applicatio
 
 async function checkStopConditions(page, { host = "joinhandshake.com", allowApplyForm = false } = {}) {
   const url = page.url();
-  if (!new RegExp(host.replace(/\./g, "\\.")).test(url)) return `redirected off ${host} -> ${url}`;
+  if (!new RegExp(host.replace(/[.*+?^${}()|[\]\\]/g, "\\$&")).test(url)) return `redirected off ${host} -> ${url}`;
   if (/\/login|\/access\b|\/users\/sign_in|sso|shibboleth/i.test(url)) return "forced re-login";
   const body = (await page.textContent("body").catch(() => "")) || "";
   if (/unusual activity|are you a robot|verify you are human|rate limit/i.test(body))

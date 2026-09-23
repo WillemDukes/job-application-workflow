@@ -85,7 +85,7 @@ const DEFAULT_WANT = 10;
 const DEFAULT_SEARCH_URL = `${profile.platforms.handshake.base_url || "https://SCHOOL.joinhandshake.com"}/job-search`;
 
 const appKey = (employer, role, url) =>
-  crypto.createHash("sha1").update(`${employer}|${role}|${url}`).digest("hex").slice(0, 16);
+  crypto.createHash("sha256").update(`${employer}|${role}|${url}`).digest("hex").slice(0, 16);
 
 function csvEscape(v) {
   const s = (v ?? "").toString().replace(/\r?\n/g, " ").trim();
