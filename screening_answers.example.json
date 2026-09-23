@@ -1,0 +1,713 @@
+{
+  "_readme": [
+    "Answers to the screening questions employers ask on ATS forms.",
+    "",
+    "HOW TO USE THIS FILE:",
+    "  - Match on the QUESTION TEXT, not on field position. Some ATSs renumber and",
+    "    reorder fields between postings, and ask location questions twice",
+    "    with identical wording and two different answers.",
+    "  - `answer` is what is actually submitted. `match` holds regex-ish phrases",
+    "    that identify the question.",
+    "  - Anything not in this file is NOT answered automatically. Leave it blank and",
+    "    surface it to the user - a wrong screening answer is worse than a slow one.",
+    "",
+    "DEMOGRAPHIC QUESTIONS ARE VOLUNTARY. They are voluntary on every form: fill",
+    "them only when instructed, and never treat a blank one as an error.",
+    "",
+    "NOT HERE, BY DESIGN: SSN, driver's license, bank details. See profile.json."
+  ],
+  "contact": {
+    "_comment": "Controls contact information fields. Auto-filled by setup.mjs.",
+    "email": {
+      "answer": "<Email address>",
+      "match": [
+        "email",
+        "email address",
+        "e-mail",
+        "personal email"
+      ],
+      "note": "Always this address, never the university one. profile.json carries the university email as UNVERIFIED with an explicit instruction never to type it into a form. Added after external forms stalled on a required 'email *' field with no saved answer.",
+      "repeat": true,
+      "repeat_note": "SuccessFactors asks both 'Email Address' and 'Retype Email Address'. repeat:true lets this one answer fill both fields with the identical literal value, which is what a retype box needs - no separate mirrored entry required."
+    },
+    "first_name": {
+      "answer": "<First name>",
+      "match": [
+        "first name",
+        "given name",
+        "legal first name"
+      ]
+    },
+    "last_name": {
+      "answer": "<Last name>",
+      "match": [
+        "last name",
+        "surname",
+        "family name",
+        "legal last name"
+      ]
+    },
+    "full_name": {
+      "answer": "<Full legal name>",
+      "match": [
+        "full name",
+        "legal name",
+        "full legal name"
+      ],
+      "note": "Legal name, per profile.json identity.legal_name. 'preferred name' is answered separately."
+    },
+    "phone": {
+      "answer": "<Phone number>",
+      "match": [
+        "phone",
+        "phone number",
+        "mobile"
+      ],
+      "note": "Same value as profile.json identity.phone. That file is the source of truth."
+    },
+    "linkedin": {
+      "answer": "<LinkedIn URL>",
+      "match": [
+        "linkedin",
+        "linkedin profile"
+      ],
+      "note": "Some ATSs show a redirect suffix from the paste. The clean URL above is the one to type."
+    },
+    "preferred_name": {
+      "answer": "<Preferred name>",
+      "match": [
+        "preferred name",
+        "what is your preferred name"
+      ]
+    },
+    "phonetic_name": {
+      "answer": "<Phonetic name>",
+      "match": [
+        "phonetic",
+        "pronunciation",
+        "pronounce"
+      ],
+      "note": "Typed name as-is rather than a phonetic spelling."
+    }
+  },
+  "eligibility": {
+    "_comment": "Controls work authorization. Auto-filled by setup.mjs.",
+    "visa_sponsorship": {
+      "answer": "No",
+      "match": [
+        "visa sponsorship",
+        "require sponsorship",
+        "now or in the future"
+      ],
+      "note": "Question asks whether the applicant WILL REQUIRE sponsorship. The answer is No."
+    },
+    "age_18_or_older": {
+      "answer": "Yes",
+      "match": [
+        "18 years of age or older",
+        "are you 18",
+        "at least 18 years"
+      ],
+      "note": "SuccessFactors 'Are you 18 years of age or older?'. Applicant is comfortably over 18."
+    },
+    "authorized_to_work_us": {
+      "answer": "Yes",
+      "match": [
+        "authorized to work in the us",
+        "authorized to work in the united states",
+        "legally authorized to work",
+        "work authorization"
+      ],
+      "note": "SuccessFactors 'Are you authorized to work in the US?'. Answer Yes; visa_sponsorship above is separately No (applicant needs no sponsorship)."
+    }
+  },
+  "sourcing": {
+    "_comment": "Controls sourcing questions. Needs manual review.",
+    "how_did_you_hear_about_this_job": {
+      "answer": "Other",
+      "match": [
+        "how did you hear about this job",
+        "how did you hear about this role"
+      ]
+    },
+    "how_did_you_hear_about_company": {
+      "answer": "Website",
+      "match": [
+        "how did you originally hear about",
+        "how did you hear about us"
+      ],
+      "note": "Reuse 'Website' for the equivalent question at other employers.",
+      "answer_options_variant": {
+        "when_radio_options_include": "Online Job Board",
+        "answer": "Online Job Board",
+        "note": "Paylocity offers Online Job Board / Company Website / Friend or Family Member / Other. Pick 'Online Job Board'. The plain-text 'Website' answer above is for free-text or differently-worded versions."
+      }
+    },
+    "referred_by": {
+      "answer": "Online Job Board",
+      "match": [
+        "referred by",
+        "referral",
+        "who referred you",
+        "referred by (required)"
+      ],
+      "note": "Nobody refers the applicant; this box is required on Paylocity. Chosen to AGREE with the 'How did you hear about us?' radio directly above it, which is answered 'Online Job Board'. Do not write a person's name here."
+    },
+    "job_board_name": {
+      "answer": "<Job board name>",
+      "match": [
+        "name of the job board",
+        "what was the name of the job board",
+        "which job board",
+        "if you saw this opportunity on another job board"
+      ],
+      "note": "Distinct from referred_by ('Online Job Board') - this asks WHICH board."
+    }
+  },
+  "academic": {
+    "_comment": "Controls academic details. Needs manual review.",
+    "expected_graduation_year": {
+      "answer": "<Expected graduation date>",
+      "match": [
+        "expected college graduation",
+        "graduation year",
+        "when do you graduate"
+      ],
+      "note": "Matches profile.json academic.expected_graduation."
+    }
+  },
+  "preferences": {
+    "_comment": "Controls preferences. Needs manual review.",
+    "preferred_location": {
+      "answer": [
+        "<Preferred location 1>",
+        "<Preferred location 2>"
+      ],
+      "match": [
+        "which location would you",
+        "location you would be most interested"
+      ],
+      "note": "Asked TWICE with identical wording. The first was a dropdown answered with location 1; the second was a multi-select chip field answered with location 2. If a form asks once, use location 1. If twice, use both in order."
+    },
+    "internship_session": {
+      "answer": "<Target session>",
+      "match": [
+        "internship session",
+        "which session",
+        "term you are interested"
+      ],
+      "note": "Time-sensitive. Re-confirm with the applicant once the target session has passed."
+    },
+    "preferred_language": {
+      "answer": [
+        "US English",
+        "English"
+      ],
+      "match": [
+        "preferred language"
+      ],
+      "note": "SuccessFactors 'Preferred Language:' offers 'US English' / 'UK English', NOT plain 'English' - an 'English' answer never start-matched, so the field reverted to '--'. Priority list: the widget picker uses the FIRST entry ('US English', correct for a US applicant); 'English' is kept as the documented fallback for any portal that lists plain 'English'."
+    }
+  },
+  "account_creation": {
+    "_comment": "Controls account creation. Needs manual review.",
+    "_note": "SuccessFactors-style portals put up a real account-creation step - Choose Password / Retype Password - before showing the application. FILL_SCREENING never touches a password field unless the matched entry carries allow_password:true - see apply_core.js's CREDENTIAL check.",
+    "password": {
+      "answer": "<Choose a password for ATS accounts, 8-18 chars>",
+      "match": [
+        "choose password",
+        "retype password"
+      ],
+      "allow_password": true,
+      "repeat": true,
+      "note": "repeat:true so the same literal value fills BOTH 'Choose Password' and 'Retype Password' - a retype box needs an exact mirror, and reusing one entry is simpler and safer than a separate mirrored entry. Meets the stated rule (8-18 chars, upper+lower+digit-or-punct, no spaces/unicode). Scoped narrowly to these two SuccessFactors labels, not the bare word 'password', so it cannot fire on an unrelated portal's login wall."
+    }
+  },
+  "consent": {
+    "_comment": "Controls consent options. Needs manual review.",
+    "sms_recruiting": {
+      "answer": "Yes",
+      "match": [
+        "consent to receive recruiting sms",
+        "text messages",
+        "sms messages",
+        "permission to text you"
+      ],
+      "note": "Yes by default at EVERY employer, no longer confirm per employer."
+    },
+    "sms_optin_successfactors": {
+      "answer": "No",
+      "match": [
+        "would you like to opt in to text messages",
+        "opt in to text messages"
+      ],
+      "note": "SuccessFactors specifically: this exact question is answered No, overriding the general sms_recruiting=Yes rule above. The match phrase here is longer than sms_recruiting's 'text messages' token, so FILL_SCREENING's longest-token ranking picks this entry on this exact wording without editing the general rule."
+    }
+  },
+  "demographic_voluntary": {
+    "_comment": "Controls voluntary demographic details. Needs manual review.",
+    "_note": "VOLUNTARY on every form. Do not fill them without explicit authorization on the run. Ethnicity and Race were ONE entry until recently, which broke on SuccessFactors, which renders Ethnicity and Race as two SEPARATE required dropdowns each needing its own answer. Split below; verified word-for-word against the live picklist options (widgets.js's 'sfpicklist' kind - a custom SF combobox, not a native <select>, so FILL_SCREENING's own select handling never sees these; the `match` arrays below still matter for any OTHER portal that renders these as real <select>/radio fields).",
+    "gender": {
+      "answer": "<Prefer not to answer / your choice>",
+      "match": [
+        "gender"
+      ]
+    },
+    "ethnicity": {
+      "answer": "<Prefer not to answer / your choice>",
+      "match": [
+        "ethnicity"
+      ]
+    },
+    "race": {
+      "answer": "<Prefer not to answer / your choice>",
+      "match": [
+        "race"
+      ],
+      "note": "Added recently - was folded into 'ethnicity' before, which is wrong: SuccessFactors asks Ethnicity and Race as two separate required dropdowns."
+    },
+    "veteran_status": {
+      "answer": "<Prefer not to answer / your choice>",
+      "match": [
+        "veteran",
+        "protected veteran"
+      ]
+    },
+    "disability_status": {
+      "answer": "<Prefer not to answer / your choice>",
+      "match": [
+        "disability"
+      ],
+      "note": "Corrected to match the live SuccessFactors option text exactly ('do not', not \"don't\"). This is the standard OFCCP/CC-305 self-identification wording, so it should hold on other ATSs too."
+    }
+  },
+  "employment_history": {
+    "_comment": "Controls employment history answers. Needs manual review.",
+    "_note": "Answer No to both automatically at ANY employer. Applicant has no prior applications or employment with any current target.",
+    "applied_here_before": {
+      "answer": "No",
+      "match": [
+        "have you applied for a job with us before",
+        "applied here before",
+        "previously applied"
+      ]
+    },
+    "worked_here_before": {
+      "answer": "No",
+      "match": [
+        "have you worked with us before",
+        "worked here before",
+        "former employee",
+        "previously employed by",
+        "have you worked for",
+        "worked for this company before"
+      ],
+      "note": "Added 'have you worked for' / 'worked for this company before' for SuccessFactors' exact wording. Answer stays No, consistent with the section _note."
+    },
+    "reason_for_leaving": {
+      "answer": "<Reason for leaving>",
+      "match": [
+        "reason for leaving",
+        "why did you leave",
+        "reason you left"
+      ],
+      "note": "Applies to previous roles.",
+      "repeat": true,
+      "require_block": "work"
+    }
+  },
+  "compensation": {
+    "_comment": "Controls compensation answers. Auto-filled by setup.mjs.",
+    "desired_salary": {
+      "answer": "PAY_LOW",
+      "match": [
+        "desired salary",
+        "salary expectation",
+        "expected salary",
+        "desired pay",
+        "desired rate",
+        "pay expectation",
+        "wage expectation",
+        "desired compensation"
+      ],
+      "rule": "Low end of the range the posting advertised. Resolved at fill time from the job row's pay column by payLowEnd() in apply_core.js - never hardcoded.",
+      "note": "Use low end of range as the standing rule. If the posting printed NO rate, PAY_LOW resolves to nothing and the field is left blank rather than guessed."
+    },
+    "salary_expectations_open": {
+      "answer": "SALARY_RATE",
+      "match": [
+        "salary expectations"
+      ],
+      "rule": "A plain number, resolved at fill time by parsePageRateLow()/payLowEnd() in apply_core.js - never hardcoded.",
+      "note": "SuccessFactors 'Salary expectations:' free-text box specifically. It rejects literal text because SF validates this field as numeric. Now resolves to a number: first choice is the LOW end of the posting's own sentence (parsePageRateLow - works across different postings); falls back to the CSV pay column (PAY_LOW's payLowEnd) if the page printed no rate; left blank as a gap if neither has a number. FILL_SCREENING's word-boundary match means the plural 'salary expectations' here does not collide with desired_salary's singular 'salary expectation' token - they never match the same question."
+    }
+  },
+  "address": {
+    "_comment": "Controls address details. Needs manual review.",
+    "_note": "From profile.json identity.local_address. Paylocity asks for this on the applicant record AND again, as the EMPLOYER's address, inside every Work History entry - do not confuse the two. avoid_within: these are the applicant's OWN address fields and must never be filled inside a Work History, Education or References block, where an identically-labelled City/County/State/Zip box wants a previous EMPLOYER'S address. Enforced by sectionOf() in FILL_SCREENING.",
+    "street": {
+      "answer": "<Street Address>",
+      "match": [
+        "address line 1",
+        "street address",
+        "address"
+      ],
+      "avoid_within": [
+        "work history",
+        "employment history",
+        "employment record",
+        "previous employer",
+        "prior employer",
+        "work experience",
+        "employer information",
+        "employer address",
+        "references",
+        "reference information",
+        "education",
+        "school"
+      ],
+      "avoid_block": [
+        "work",
+        "education"
+      ]
+    },
+    "address_line_2": {
+      "answer": "",
+      "note": "Genuinely empty. Deliberately has no 'match' list so FILL_SCREENING never targets it.",
+      "avoid_within": [
+        "work history",
+        "employment history",
+        "employment record",
+        "previous employer",
+        "prior employer",
+        "work experience",
+        "employer information",
+        "employer address",
+        "references",
+        "reference information",
+        "education",
+        "school"
+      ],
+      "avoid_block": [
+        "work",
+        "education"
+      ]
+    },
+    "city": {
+      "answer": "<City>",
+      "match": [
+        "city"
+      ],
+      "avoid_within": [
+        "work history",
+        "employment history",
+        "employment record",
+        "previous employer",
+        "prior employer",
+        "work experience",
+        "employer information",
+        "employer address",
+        "references",
+        "reference information",
+        "education",
+        "school"
+      ],
+      "avoid_block": [
+        "work",
+        "education"
+      ]
+    },
+    "state": {
+      "answer": "<State abbreviation>",
+      "match": [
+        "state",
+        "select a state"
+      ],
+      "avoid_within": [
+        "work history",
+        "employment history",
+        "employment record",
+        "previous employer",
+        "prior employer",
+        "work experience",
+        "employer information",
+        "employer address",
+        "references",
+        "reference information",
+        "education",
+        "school"
+      ],
+      "avoid_block": [
+        "work",
+        "education"
+      ]
+    },
+    "zip": {
+      "answer": "<Zip code>",
+      "match": [
+        "zip",
+        "zip code",
+        "postal code"
+      ],
+      "avoid_within": [
+        "work history",
+        "employment history",
+        "employment record",
+        "previous employer",
+        "prior employer",
+        "work experience",
+        "employer information",
+        "employer address",
+        "references",
+        "reference information",
+        "education",
+        "school"
+      ],
+      "avoid_block": [
+        "work",
+        "education"
+      ]
+    },
+    "state_province": {
+      "answer": "<State name>",
+      "match": [
+        "state/province"
+      ],
+      "note": "SuccessFactors 'State/Province:' dropdown specifically: lists full state NAMES, not the abbreviation the generic state.answer uses elsewhere. 'state/province' is a longer match token than the generic 'state' entry's, so this wins on that exact label without touching the generic rule."
+    },
+    "country": {
+      "answer": "United States",
+      "match": [
+        "country"
+      ],
+      "repeat": true,
+      "repeat_note": "SuccessFactors asks for 'Country' twice - once as 'Country/Region Code:' (phone) and once as 'Country:' (address). Both want the same answer, so repeat:true lets this one entry fill both instead of the second being starved because the first already consumed it.",
+      "avoid_within": [
+        "work history",
+        "employment history",
+        "employment record",
+        "previous employer",
+        "prior employer",
+        "work experience",
+        "employer information",
+        "employer address",
+        "references",
+        "reference information",
+        "education",
+        "school"
+      ],
+      "avoid_block": [
+        "work",
+        "education"
+      ]
+    },
+    "county": {
+      "answer": "<County>",
+      "match": [
+        "county"
+      ],
+      "note": "This is the applicant's own county - an employer's county is a different field.",
+      "avoid_within": [
+        "work history",
+        "employment history",
+        "employment record",
+        "previous employer",
+        "prior employer",
+        "work experience",
+        "employer information",
+        "employer address",
+        "references",
+        "reference information",
+        "education",
+        "school"
+      ],
+      "avoid_block": [
+        "work",
+        "education"
+      ]
+    }
+  },
+  "availability": {
+    "_comment": "Controls availability fields. Auto-filled by setup.mjs.",
+    "start_date": {
+      "answer": "TODAY",
+      "match": [
+        "available to start",
+        "start date",
+        "earliest start",
+        "when can you start"
+      ],
+      "rule": "Write the date of the day the application is actually submitted, formatted to whatever the field asks. DO NOT assume MM/DD/YYYY: some ATSs store ISO format, and others want text. Read the field's existing/placeholder format first.",
+      "note": "Just write the date of day that the application is sent. Never a hardcoded date - compute it at fill time."
+    },
+    "hours_preference": {
+      "answer": "Part-Time (up to 20 hours per week)",
+      "match": [
+        "part-time (up to 20 hours per week)",
+        "hours per week",
+        "desired hours",
+        "employment type preference",
+        "what type of employment"
+      ],
+      "note": "Agrees with the part-time-only hard rule in lib.js (FULLTIME_RE). Where a portal offers a set of hour bands, pick the part-time one; never tick a full-time band."
+    }
+  },
+  "identity": {
+    "_comment": "Controls personal identity choices. Auto-filled by setup.mjs.",
+    "pronouns": {
+      "answer": "<Pronouns>",
+      "match": [
+        "preferred pronouns",
+        "pronouns",
+        "what are your pronouns"
+      ],
+      "note": "Voluntary on most portals; answer it when asked."
+    }
+  },
+  "certifications": {
+    "_comment": "Controls certifications. Optional and user-editable.",
+    "_note": "These are the qualifications that make the candidate a strong applicant, so fill them whenever asked.",
+    "certification_1": {
+      "answer": "<Certification name>",
+      "match": [
+        "certification (or) license number",
+        "certification name",
+        "license number",
+        "please provide certification",
+        "do you have certification"
+      ],
+      "note": "This is the certification's NAME. If a certificate ID is ever needed, ask the applicant; do not invent one."
+    },
+    "certification_2": {
+      "answer": "<Certification name>",
+      "match": [
+        "expiration date for your certification",
+        "certification expiration",
+        "license expiration",
+        "expires"
+      ],
+      "rule": "Reformat to whatever the field wants. Some ATSs take text format; others want MM/DD/YYYY or YYYY-MM-DD. Stored ISO so it can be reformatted."
+    }
+  },
+  "employer_address": {
+    "_comment": "Controls previous employer address. Needs manual review.",
+    "_note": "Addresses of PREVIOUS EMPLOYERS, for the work-history blocks on application forms. Double-guarded: Work History section AND a block naming that employer. Never confuse these with the address.* group, which is the applicant's own home address and is barred from these same sections.",
+    "reston_street": {
+      "answer": "<Employer Street>",
+      "match": [
+        "address line 1",
+        "street address",
+        "address"
+      ],
+      "require_block_text": [
+        "<Employer name>"
+      ],
+      "repeat": true,
+      "note": "Paylocity's resume parser prefills this box with a city, not a street. Correct it by hand if needed.",
+      "require_block": "work"
+    },
+    "reston_city": {
+      "answer": "<Employer City>",
+      "match": [
+        "city"
+      ],
+      "require_block_text": [
+        "<Employer name>"
+      ],
+      "repeat": true,
+      "require_block": "work"
+    },
+    "reston_county": {
+      "answer": "<Employer County>",
+      "match": [
+        "county"
+      ],
+      "require_block_text": [
+        "<Employer name>"
+      ],
+      "repeat": true,
+      "note": "This is the employer's county - NOT the applicant's own county.",
+      "require_block": "work"
+    },
+    "reston_state": {
+      "answer": "<Employer State>",
+      "match": [
+        "state"
+      ],
+      "require_block_text": [
+        "<Employer name>"
+      ],
+      "repeat": true,
+      "require_block": "work"
+    },
+    "reston_zip": {
+      "answer": "<Employer Zip>",
+      "match": [
+        "zip code",
+        "zip",
+        "postal code"
+      ],
+      "require_block_text": [
+        "<Employer name>"
+      ],
+      "repeat": true,
+      "require_block": "work"
+    },
+    "reston_country": {
+      "answer": "United States",
+      "match": [
+        "country"
+      ],
+      "require_block_text": [
+        "<Employer name>"
+      ],
+      "repeat": true,
+      "require_block": "work"
+    }
+  },
+  "education": {
+    "_comment": "Controls education details. Needs manual review.",
+    "_note": "From profile.json academic{}: University, major, academic level, expected graduation. Do NOT write alternate generic names if the major has a specific name.",
+    "school_name": {
+      "answer": "<University name>",
+      "match": [
+        "school name",
+        "school",
+        "university",
+        "college name",
+        "institution"
+      ],
+      "repeat": true,
+      "require_block": "education"
+    },
+    "area_of_study": {
+      "answer": "<Major or Area of Study>",
+      "match": [
+        "area of study",
+        "field of study",
+        "major",
+        "course of study"
+      ],
+      "repeat": true,
+      "require_block": "education"
+    },
+    "school_city": {
+      "answer": "<School City>",
+      "match": [
+        "city"
+      ],
+      "repeat": true,
+      "require_block": "education"
+    }
+  },
+  "application_terms": {
+    "_comment": "Controls terms acceptance checkboxes. Needs manual review.",
+    "i_accept": {
+      "answer": "true",
+      "match": [
+        "i accept"
+      ],
+      "note": "Authorises checking SuccessFactors Applicant Acknowledgement checkbox - attesting the application info is true and complete - on every application. FILL_SCREENING's checkbox handling treats a truthy answer (true/yes/accept/check/agree) as 'check this box'; it never unchecks anything."
+    }
+  }
+}

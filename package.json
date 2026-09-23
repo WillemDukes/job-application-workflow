@@ -1,0 +1,21 @@
+{
+  "name": "job-application-automation",
+  "private": true,
+  "type": "commonjs",
+  "engines": {
+    "node": ">=20"
+  },
+  "dependencies": {
+    "playwright": "1.62.1"
+  },
+  "scripts": {
+    "setup": "node setup.mjs",
+    "scan": "node scripts/handshake_scan.js",
+    "apply": "node scripts/apply_batch.js",
+    "apply:dry": "node scripts/apply_batch.js --dry-run",
+    "watch": "node scripts/apply_watch.js",
+    "cover": "python scripts/make_cover_letter.py",
+    "check": "node -e \"const c=require('./scripts/config');const {errors,warnings}=c.validateProfileReport();warnings.forEach(w=>console.error('WARNING:',w));if(errors.length){errors.forEach(e=>console.error('ERROR:',e));process.exit(1);}console.log('OK');\"",
+    "postinstall": "playwright install chromium"
+  }
+}

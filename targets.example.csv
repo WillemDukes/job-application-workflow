@@ -1,0 +1,7 @@
+rank,employer,category,why,location,notes,status
+1,Example Corp,tech,,,"Matches target title: <title>",unseeded
+2,Example University,oncampus,,,,unseeded
+3,Example Staffing,staffing,,,,unseeded
+4,,tech,,,,unseeded
+5,,oncampus,,,,unseeded
+6,,staffing,,,,unseeded

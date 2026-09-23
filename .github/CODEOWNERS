@@ -1,0 +1,26 @@
+# CODEOWNERS — security-sensitive review ownership
+#
+# Owner: @WillemDukes.
+#
+# To make CODEOWNER review blocking, enable the corresponding branch/ruleset
+# requirement. Configure under Settings > Rules.
+
+# Security-sensitive files
+.github/workflows/                   @WillemDukes
+SECURITY.md                          @WillemDukes
+
+# Agent instruction surfaces
+CLAUDE.md                            @WillemDukes
+AGENTS.md                            @WillemDukes
+.claude/skills/                      @WillemDukes
+.claude/commands/                    @WillemDukes
+
+# Security hardening surfaces
+scripts/secure-repo.sh               @WillemDukes
+templates/hooks/                     @WillemDukes
+.github/workflows/secret-scan-pr.yml @WillemDukes
+.gitattributes                       @WillemDukes
+
+# Personal-data templates (a bad edit here could teach users to leak data)
+.gitignore                           @WillemDukes
+*.example.json                       @WillemDukes

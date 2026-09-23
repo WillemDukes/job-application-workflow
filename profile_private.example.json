@@ -1,0 +1,29 @@
+{
+  "_readme": [
+    "TIER 2 - mildly sensitive. Kept OUT of profile.json on purpose.",
+    "",
+    "Rule: this file is opened only when a specific application form actually asks",
+    "for one of these fields. It is not read on routine runs. The reason for the",
+    "split is that name + DOB + permanent address together are the combination that",
+    "becomes useful for identity theft; none of them are needed to fill a typical",
+    "job posting.",
+    "",
+    "NEVER STORE HERE: SSN, driver's license number, bank details.",
+    "Type those yourself on the review screen if a legitimate form ever asks."
+  ],
+  "_accounts_note": "Portal sign-in credentials, keyed by ATS name (e.g. successfactors, workday, paylocity). Read ONLY by the engine's signIn helpers (apply_core.loadAccount), never typed into an application field. setup.mjs fills this section for you.",
+  "accounts": {
+    "successfactors": {
+      "username": "<Your Email>",
+      "password": "<Your Password>"
+    }
+  },
+  "date_of_birth": "<YYYY-MM-DD, optional>",
+  "permanent_address": {
+    "street": "<Your street address>",
+    "city": "<Your city>",
+    "state": "<Your state>",
+    "zip": "<Your zip code>"
+  },
+  "school_student_id": "<Your student ID, optional>"
+}

@@ -1,0 +1,37 @@
+{
+  "_readme": [
+    "One entry per employer. Replaces previous split files.",
+    "'angle' is the one sentence the cover letter builds around.",
+    "'email_pattern' tokens: {first} {last} {f} {l} {domain} — generic tokens.",
+    "'pattern_confidence': confirmed | likely | unknown. Only 'confirmed' skips the",
+    "Hunter confidence gate."
+  ],
+  "default": {
+    "angle": "<One sentence about why you are a strong candidate>",
+    "email_pattern": "{first}.{last}@{domain}",
+    "pattern_confidence": "unknown",
+    "coordinator_title_priority": [
+      "staffing coordinator",
+      "hiring manager",
+      "student employment coordinator",
+      "manager",
+      "director"
+    ]
+  },
+  "Example Corp": {
+    "domain": "example.com",
+    "category": "tech",
+    "angle": "<One sentence about why you are a strong candidate>",
+    "email_pattern": "{first}.{last}@{domain}",
+    "pattern_confidence": "unknown"
+  },
+  "Example University": {
+    "domain": "example.edu",
+    "category": "oncampus",
+    "angle": "<One sentence about why you are a strong candidate>"
+  },
+  "Example Staffing": {
+    "category": "staffing",
+    "angle": "<One sentence about why you are a strong candidate>"
+  }
+}

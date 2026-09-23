@@ -1,0 +1,81 @@
+# CI Workflow — Automated Checks on Every Push and PR
+#
+# What this does: Runs your tests, linter, and build automatically whenever
+# you push code or open a pull request. If something breaks, GitHub shows a
+# red X on the commit/PR so you know before merging.
+#
+# Why CI matters: Without this, broken code silently reaches your main branch.
+# CI catches bugs, type errors, and style issues before they become problems.
+# Even solo developers benefit — it is your automated code reviewer.
+#
+# Checks: every JS/Python file parses, every example config is valid JSON,
+# and no personal-data file (profile.json, resumes, logs...) is tracked.
+# The Playwright test suites need a filled-in profile and a real browser,
+# so they run locally only (see README).
+
+name: CI
+
+# Why NO paths-ignore: the `build` job is a REQUIRED status check on main.
+# A required check that gets path-filtered never reports on docs-only PRs,
+# and the ruleset then blocks the merge forever — the classic GitHub footgun.
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+# Why concurrency + cancel-in-progress: If you push 3 times in a row, only
+# the latest push runs CI. Prevents wasting your GitHub Actions minutes on
+# outdated commits that you have already moved past.
+concurrency:
+  group: ${{ github.workflow }}-${{ github.ref }}
+  cancel-in-progress: true
+
+# Why permissions: contents: read — Principle of least privilege.
+# This workflow only needs to READ your code, not write to the repo.
+# If a compromised action tried to push code or modify settings, this
+# permission block prevents it. Always restrict to the minimum needed.
+permissions:
+  contents: read
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    # Why timeout-minutes: Prevents runaway jobs from burning through your
+    # GitHub Actions quota. Without this, a hanging test could run for 6 hours
+    # (the default). 15 minutes is generous for most builds.
+    timeout-minutes: 15
+
+    steps:
+      # Why SHA-pinning: Pinned to a full commit SHA instead of a version tag
+      # (e.g., @v4) to prevent supply chain attacks. If an attacker compromises
+      # the action's repo and moves the v4 tag, SHA-pinned repos are unaffected.
+      # Dependabot will automatically create PRs to update these SHAs.
+      - name: Checkout
+        uses: actions/checkout@3d3c42e5aac5ba805825da76410c181273ba90b1 # v7.0.1
+
+      - name: Setup Node.js
+        uses: actions/setup-node@820762786026740c76f36085b0efc47a31fe5020 # v7.0.0
+        with:
+          node-version: '20'
+
+      - name: Setup Python
+        uses: actions/setup-python@5fda3b95a4ea91299a34e894583c3862153e4b97 # v7.0.0
+        with:
+          python-version: '3.12'
+
+      - name: JavaScript syntax
+        run: |
+          for f in scripts/*.js setup.mjs; do node --check "$f"; done
+
+      - name: Python syntax
+        run: python -m py_compile scripts/*.py
+
+      - name: Example configs are valid JSON
+        run: |
+          for f in *.example.json; do node -e "JSON.parse(require('fs').readFileSync('$f','utf8'))" || { echo "Invalid JSON: $f"; exit 1; }; done
+
+      - name: No personal-data files are tracked
+        run: |
+          bad=$(git ls-files | grep -E '^(profile|profile_private|screening_answers|employers|setup\.answers)\.json$|^targets\.csv$|^applied\.jsonl$|^(resumes|documents|logs|generated|outbox|runs)/[^.]' || true)
+          if [ -n "$bad" ]; then echo "Personal-data files committed:"; echo "$bad"; exit 1; fi

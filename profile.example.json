@@ -1,0 +1,267 @@
+{
+  "_readme": [
+    "Copy made by setup.mjs into profile.json. Fields in angle-bracket placeholders are placeholders; setup.mjs fills the required ones. Optional sections may be left blank.",
+    "NOT IN THIS FILE, BY DESIGN:",
+    "  - SSN, driver's license number, bank/routing numbers. Never stored anywhere.",
+    "    These are collected post-hire on the I-9/W-4, not on an application. If a",
+    "    posting asks for them before an offer, it is a scam - close the tab.",
+    "  - DOB, permanent address, student ID -> profile_private.json (Tier 2), opened",
+    "    only when a specific form demands them."
+  ],
+  "identity": {
+    "legal_name": "<Your full legal name>",
+    "preferred_name": "<Your preferred name>",
+    "email": "<Your email address>",
+    "school_email": "<Your university email address>",
+    "_school_email_note": "Use the primary email address on all applications. Do not put the university email on forms.",
+    "phone": "<Your phone number>",
+    "school_student_id": "<Your student ID>",
+    "local_address": {
+      "street": "<Your street address>",
+      "city": "<Your city>",
+      "state": "<Your state>",
+      "zip": "<Your zip code>",
+      "county": "<Your county>"
+    },
+    "school": "<Your university name>",
+    "linkedin": "https://linkedin.com/in/<Your Profile>"
+  },
+  "location": {
+    "_comment": "Commute distances in miles from home city for classifying job locations, and default search radius.",
+    "commute_miles": {
+      "<Nearby town>": 5,
+      "<Other town>": 15
+    },
+    "default_radius_miles": 10
+  },
+  "academic": {
+    "school": "<Your University>",
+    "major": "<Your major>",
+    "minor": "<Your minor>",
+    "class_standing": "<Your class standing>",
+    "enrolled_since": "<YYYY-MM>",
+    "expected_graduation": "<Month YYYY>",
+    "gpa": 4.0,
+    "list_gpa_on_applications": true,
+    "honors": [
+      "<Honor or award>"
+    ]
+  },
+  "availability": {
+    "_comment": "Class schedule and availability information. setup.mjs confirms these values.",
+    "semester": "<Semester YYYY>",
+    "classes": [
+      {
+        "course": "<DEPT 123 - Course title>",
+        "days": [
+          "Mo"
+        ],
+        "start": "09:00",
+        "end": "09:50",
+        "room": "<Building Room>"
+      },
+      {
+        "course": "<DEPT 456 - Course title>",
+        "days": [
+          "Tu",
+          "Th"
+        ],
+        "start": "13:00",
+        "end": "14:15",
+        "room": "<Building Room>"
+      }
+    ],
+    "free_blocks": {
+      "Monday": [
+        [
+          "08:00",
+          "09:00"
+        ],
+        [
+          "09:50",
+          "17:00"
+        ]
+      ],
+      "Tuesday": [
+        [
+          "08:00",
+          "13:00"
+        ],
+        [
+          "14:15",
+          "17:00"
+        ]
+      ],
+      "Wednesday": [
+        [
+          "08:00",
+          "17:00"
+        ]
+      ],
+      "Thursday": [
+        [
+          "08:00",
+          "13:00"
+        ],
+        [
+          "14:15",
+          "17:00"
+        ]
+      ],
+      "Friday": [
+        [
+          "08:00",
+          "17:00"
+        ]
+      ],
+      "Saturday": [
+        [
+          "08:00",
+          "17:00"
+        ]
+      ],
+      "Sunday": [
+        [
+          "08:00",
+          "17:00"
+        ]
+      ]
+    },
+    "best_shift_blocks": [
+      "<Availability block 1>",
+      "<Availability block 2>"
+    ],
+    "cover_letter_sentence": "<Generic availability statement for cover letter.>",
+    "max_hours_per_week": 15,
+    "preferred_hours_per_week": "10-15",
+    "earliest_start_date": "immediately",
+    "hard_blackouts": []
+  },
+  "work_basics": {
+    "_comment": "Basic work requirements and preferences. setup.mjs sets or confirms these values.",
+    "authorized_to_work_us": true,
+    "requires_sponsorship": false,
+    "has_reliable_transportation": true,
+    "has_car": true,
+    "minimum_hourly_rate": null
+  },
+  "certifications": [
+    {
+      "name": "<Certification name>",
+      "expires": "<YYYY-MM>",
+      "notes": ""
+    },
+    {
+      "name": "<Certification name>",
+      "expires": "<YYYY-MM>"
+    }
+  ],
+  "skills": {
+    "programming": [
+      "<Skill 1>",
+      "<Skill 2>"
+    ],
+    "modeling_cad": [
+      "<Skill 1>",
+      "<Skill 2>"
+    ],
+    "other": [
+      "<Skill 1>",
+      "<Skill 2>"
+    ]
+  },
+  "work_history": [
+    {
+      "employer": "<Employer name>",
+      "title": "<Job title>",
+      "location": "<City, State>",
+      "start": "<YYYY-MM>",
+      "end": "<YYYY-MM>",
+      "supervisor_name": "<Supervisor Name>",
+      "supervisor_phone": "<Supervisor Phone>",
+      "ending_pay_rate": "<Pay rate>",
+      "reason_for_leaving": "<Reason for leaving>",
+      "duties": [
+        "<Duty description 1>",
+        "<Duty description 2>"
+      ],
+      "employer_address": {
+        "street": "<Street>",
+        "city": "<City>",
+        "state": "<State>",
+        "zip": "<Zip>",
+        "county": "<County>"
+      },
+      "supervisor_email": "<Supervisor Email>",
+      "supervisor_title": "<Supervisor Title>"
+    },
+    {
+      "employer": "<Employer name>",
+      "title": "<Job title>",
+      "location": "<City, State>",
+      "start": "<YYYY-MM>",
+      "end": "<YYYY-MM>",
+      "supervisor_name": "<Supervisor Name>",
+      "supervisor_phone": "<Supervisor Phone>",
+      "ending_pay_rate": "<Pay rate>",
+      "reason_for_leaving": "<Reason for leaving>",
+      "duties": [
+        "<Duty description 1>",
+        "<Duty description 2>"
+      ],
+      "employer_address": {
+        "street": "<Street>",
+        "city": "<City>",
+        "state": "<State>",
+        "zip": "<Zip>",
+        "county": "<County>"
+      },
+      "supervisor_email": "<Supervisor Email>",
+      "supervisor_title": "<Supervisor Title>"
+    }
+  ],
+  "projects": [
+    {
+      "name": "<Project Name>",
+      "date": "<YYYY-MM>",
+      "summary": "<Project summary>",
+      "location": "<City, State>"
+    }
+  ],
+  "campus_involvement": [
+    {
+      "org": "<Organization Name>",
+      "role": "<Role>",
+      "start": "<YYYY-MM>",
+      "end": "<YYYY-MM>"
+    }
+  ],
+  "references": [
+    {
+      "name": "<Reference Name>",
+      "email": "<Reference Email>",
+      "phone": "<Reference Phone>",
+      "relationship": "<e.g. Professor, Former manager>",
+      "permission_confirmed": false
+    }
+  ],
+  "documents": {
+    "resume_docx_master": "",
+    "resume_pdf": "",
+    "_resume_pdf_note": "No PDF kept. Export from master document when a portal demands one, then delete it.",
+    "cover_letter_docx": "",
+    "cover_letter_md": "",
+    "generated_letters_dir": "generated/"
+  },
+  "never_stored": [
+    "Social Security Number",
+    "Driver's license number",
+    "Bank account / routing numbers",
+    "Passwords"
+  ],
+  "platforms": {
+    "handshake": {
+      "base_url": "https://SCHOOL.joinhandshake.com"
+    }
+  }
+}

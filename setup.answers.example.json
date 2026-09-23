@@ -1,0 +1,56 @@
+{
+  "legal_name": "Your Full Name",
+  "preferred_name": "Your Name",
+  "email": "you@example.com",
+  "school_email": "you@youruniversity.edu",
+  "phone": "555-0199",
+  "school_student_id": "00123456",
+  "street": "123 Main St",
+  "city": "Your City",
+  "state": "Your State",
+  "zip": "00000",
+  "county": "Your County",
+  "country": "United States",
+  "linkedin": "https://linkedin.com/in/yourprofile",
+  "github": "https://github.com/yourusername",
+  "school": "Your University",
+  "handshake_url": "https://yourschool.joinhandshake.com",
+  "degree": "Bachelor of Science",
+  "major": "Computer Science",
+  "graduation": "May 2028",
+  "gpa": "3.5",
+  "default_radius_miles": "10",
+  "work_auth": "US citizen",
+  "authorized_to_work_us": "y",
+  "sponsorship": "n",
+  "target_titles": "Software Engineer, Data Analyst",
+  "target_locations": "New York, Remote",
+  "open_remote": "y",
+  "start_date": "immediately",
+  "min_salary": "20",
+  "hours_pref": "full-time",
+  "resume_path": "",
+  "cover_letter_path": "",
+  "dob": "2000-01-01",
+  "perm_address": "123 Main St, Your City, YS 00000",
+  "ats_accounts": [
+    {
+      "site": "workday",
+      "username": "you@example.com",
+      "password": "FakePassword123!"
+    }
+  ],
+  "work_history": [
+    {
+      "employer": "Example Employer",
+      "title": "Sales Associate",
+      "location": "Your City, Your State",
+      "start": "2024-06",
+      "end": "2025-08",
+      "supervisor_name": "Jane Supervisor",
+      "supervisor_phone": "555-0100",
+      "reason_for_leaving": "Left for college",
+      "may_contact": true
+    }
+  ]
+}
